@@ -4,6 +4,8 @@ import com.meta.blogapi.dto.request.LoginRequest;
 import com.meta.blogapi.dto.request.RegisterRequest;
 import com.meta.blogapi.dto.response.AuthResponse;
 import com.meta.blogapi.entity.User;
+import com.meta.blogapi.exception.DuplicateEmailException;
+import com.meta.blogapi.exception.ResourceNotFoundException;
 import com.meta.blogapi.repository.UserRepository;
 import com.meta.blogapi.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +33,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already in use: " + request.getEmail());
+            throw new DuplicateEmailException("Email already in use: " + request.getEmail());
         }
 
         User user = User.builder()
@@ -52,7 +54,7 @@ public class AuthService {
         );
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found: " + request.getEmail()));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + request.getEmail()));
 
         String token = jwtService.generateToken(user);
         return AuthResponse.builder().token(token).build();
