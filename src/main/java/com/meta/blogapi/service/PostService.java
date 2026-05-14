@@ -9,7 +9,9 @@ import com.meta.blogapi.exception.UnauthorizedException;
 import com.meta.blogapi.repository.PostRepository;
 import com.meta.blogapi.repository.UserRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +25,8 @@ public class PostService {
         this.userRepository = userRepository;
     }
 
-    public Page<PostResponse> getAllPosts(Pageable pageable) {
+    public Page<PostResponse> getAllPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return postRepository.findAll(pageable).map(this::toResponse);
     }
 

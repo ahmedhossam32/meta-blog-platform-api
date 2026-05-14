@@ -5,8 +5,8 @@ import com.meta.blogapi.dto.response.PostResponse;
 import com.meta.blogapi.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,10 @@ public class PostController {
     }
 
     @GetMapping
-    public Page<PostResponse> getAllPosts(Pageable pageable) {
-        return postService.getAllPosts(pageable);
+    public ResponseEntity<Page<PostResponse>> getAllPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(postService.getAllPosts(page, size));
     }
 
     @PostMapping
