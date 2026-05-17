@@ -1,10 +1,10 @@
 package com.meta.blogapi.controller;
 
 import com.meta.blogapi.dto.request.PostRequest;
+import com.meta.blogapi.dto.response.PageResponse;
 import com.meta.blogapi.dto.response.PostResponse;
 import com.meta.blogapi.service.PostService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,10 +22,10 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostResponse>> getAllPosts(
+    public ResponseEntity<PageResponse<PostResponse>> getAllPosts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(postService.getAllPosts(page, size));
+        return ResponseEntity.ok(PageResponse.of(postService.getAllPosts(page, size)));
     }
 
     @PostMapping
