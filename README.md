@@ -136,3 +136,29 @@ All errors follow a consistent JSON format:
 | `404 Not Found` | Resource does not exist |
 | `409 Conflict` | Email already registered |
 | `500 Internal Server Error` | Unexpected server error |
+
+---
+
+## API in Action
+
+![Register Success](docs/screenshots/01-register-success.png)
+> POST /auth/register — 201 Created. User registered and JWT token returned.
+
+![Get All Posts](docs/screenshots/10-get-all-posts-public.png)
+> GET /posts — 200 OK. Public endpoint returns paginated posts list.
+
+![Create Post](docs/screenshots/12-create-post-success.png)
+> POST /posts — 201 Created. Authenticated user creates a new post.
+
+![Database Users Table](docs/screenshots/db-users-table.png)
+> PostgreSQL users table — passwords stored as BCrypt hashes, never plain text.
+
+---
+
+## Testing Documentation
+
+For a full walkthrough of all 25 test cases and screenshots, refer to:
+[docs/TESTING.md](docs/TESTING.md)
+
+The Postman collection covering all scenarios is available at:
+[docs/postman/blog-api-collection.json](docs/postman/blog-api-collection.json)
