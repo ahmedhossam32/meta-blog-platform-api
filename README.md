@@ -67,18 +67,24 @@ CREATE DATABASE blog_db;
 
 **3. Configure application properties**
 
-```bash
-cp src/main/resources/application-example.properties src/main/resources/application.properties
-```
-
-Open `application.properties` and fill in your credentials:
+Create `src/main/resources/application.properties` and fill in:
 
 ```properties
+spring.application.name=meta-blog-platform-api
+
 spring.datasource.url=jdbc:postgresql://localhost:5432/blog_db
 spring.datasource.username=YOUR_DB_USERNAME
 spring.datasource.password=YOUR_DB_PASSWORD
+spring.datasource.driver-class-name=org.postgresql.Driver
 
-jwt.secret=YOUR_JWT_SECRET
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+application.security.jwt.secret-key=YOUR_JWT_SECRET_KEY_BASE64_ENCODED
+application.security.jwt.expiration=86400000
+
+server.port=8080
 ```
 
 **4. Run the application**
