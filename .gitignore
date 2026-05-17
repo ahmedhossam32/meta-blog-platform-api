@@ -7,5 +7,5 @@ application.properties
 .idea/
 *.iml
 .DS_Store
-/docs
+
 

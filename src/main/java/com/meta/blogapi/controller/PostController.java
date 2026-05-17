@@ -1,6 +1,7 @@
 package com.meta.blogapi.controller;
 
 import com.meta.blogapi.dto.request.PostRequest;
+import com.meta.blogapi.dto.response.MessageResponse;
 import com.meta.blogapi.dto.response.PageResponse;
 import com.meta.blogapi.dto.response.PostResponse;
 import com.meta.blogapi.service.PostService;
@@ -42,9 +43,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable Long id) {
+    public ResponseEntity<MessageResponse> deletePost(@PathVariable Long id) {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         postService.deletePost(id, email);
+        return ResponseEntity.ok(new MessageResponse("Post deleted successfully"));
     }
 }
